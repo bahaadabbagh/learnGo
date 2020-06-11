@@ -1,11 +1,9 @@
 import React,{useState,useEffect} from "react";
 import OneCard from "./oneCard";
+import 'fontsource-roboto';
 // import database from "./firebaseConfig";
 
 export default function Cards(props) {
-  
-
-
   
   // function renderNotfinshed(props){  
   //     const NotfinshedArr = notFinshed.map(function(card, index) {
@@ -13,8 +11,6 @@ export default function Cards(props) {
   //     });
   //     return NotfinshedArr;
   //   };
-
-
   // Fixed number of columns: three (in progress, finished, not started)
   // Given a card, which column does it go to?
   // For each card:
@@ -30,15 +26,16 @@ export default function Cards(props) {
         FinishedArr.push(<OneCard card={card} key={index} />)
       }
     })
-    
     return FinishedArr;
   }
-  
   // for (... in cardArr) .... assign each one to one of the above
   return (
     <div className="column">
+      <div>
       <h2>{props.title}</h2>
-  <div>{renderfinsihedCard()}</div>
+      </div>
+      <div>
+        {renderfinsihedCard()}</div>
     </div>
   );
 }
