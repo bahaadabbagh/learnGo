@@ -4,16 +4,9 @@ import Nav from './components/index'
 import Home from './components/Home'
 import About from './components/About'
 import Contact from './components/Contact'
-import LoginPage from "./loginpage"
-// import Columns from "./Column";
-// import database from "./firebaseConfig";
+// import LoginPage from "./loginpage"
 import {  BrowserRouter as Router,  Route,} from "react-router-dom";
-import {
-  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
-  MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
-  } from "mdbreact";
-
-import CurriculumOverview from "./CurOverView"
+import { MDBNavbar, MDBNavbarBrand } from "mdbreact";
 
 function App(props) {
 
@@ -33,7 +26,7 @@ function App(props) {
   return (
     <div className="App">
       <Router>
-        <MDBNavbar color="indigo" dark expand="md">
+        <MDBNavbar className='fixedNav' color="default-color" dark expand="md">
           <MDBNavbarBrand>
             <strong className="white-text">LearnGo</strong>
           </MDBNavbarBrand>

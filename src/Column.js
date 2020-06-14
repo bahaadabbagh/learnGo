@@ -1,8 +1,6 @@
-import React,{useState,useEffect} from "react";
+import React from "react";
 import OneCard from "./oneCard";
 import 'fontsource-roboto';
-
-// import database from "./firebaseConfig";
 
 export default function Cards(props) {
   
