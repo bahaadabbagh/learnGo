@@ -1,20 +1,18 @@
 import React from 'react'
-import {Link} from "react-router-dom"
-import {
-    MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
-    MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
-    } from "mdbreact";
+import { MDBNavLink, MDBContainer } from "mdbreact";
 
 const Nav =()=>{
+
     return(
         
-        <div className="navbar">
-            <Link to='/'>Home</Link>
-            <Link to='/about'>About</Link>
-            <Link to='/contact'>Contact</Link>
-
-        </div>
+        <MDBContainer className="navbar">
+                <MDBNavLink to='/'>Home</MDBNavLink>       
+                <MDBNavLink to='/about'>About</MDBNavLink>
+                <MDBNavLink to='/contact'>Contact</MDBNavLink>
+        </MDBContainer>
     )
 }
  
 export default Nav
+
+

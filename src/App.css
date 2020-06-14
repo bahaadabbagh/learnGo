@@ -3,6 +3,12 @@
   margin-top: 50px;
 }
 
+/* .contactCard {
+  text-align: center;
+  margin-top: 50px;
+} */
+
+
 /* .oneCard {
   width: 400px;
   height: 300px;
@@ -17,6 +23,6 @@
   border-top-left-radius: 8px;
   border: 1px solid rgb(0, 0, 0);
 } */
-.column{
+/* .column{
   display: inline-flex;
-}
+} */

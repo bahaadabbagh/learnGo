@@ -1,13 +1,29 @@
 import React, { Component } from 'react'
+import { MDBBox } from 'mdbreact';
+
 
 export default class About extends Component {
     render() {
         return (
-            <div>
-                <p>I am the About Page</p><br/>
-                <p>I speak about the <b>LearnGO</b>App</p><br/>
-                <p>What am I ? let see together</p>
-            </div>
+           
+            <React.Fragment>
+            <br/>
+            <h1 display="flex" flex="column">
+            LearnGO 
+            </h1><br/>
+            <MDBBox display="flex" flex="column">
+            I am the LearnGO App
+            </MDBBox><br/>
+            <MDBBox  display="flex" flex="column">
+            What am I ? let see together
+            </MDBBox>
+            
+            
+          </React.Fragment>
+           
+                
+
+
         )
     }
 }

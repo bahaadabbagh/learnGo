@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import OneCard from "./oneCard";
 import 'fontsource-roboto';
+
 // import database from "./firebaseConfig";
 
 export default function Cards(props) {
@@ -21,11 +22,16 @@ export default function Cards(props) {
     const FinishedArr=[]
      props.cardData.forEach(function (card,index){
       if(props.title === "Finished" && card.finished){
-      FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)}
-      else if(props.title === "Not Finished" && !card.finished){
-        FinishedArr.push(<OneCard card={card} key={index} />)
+      FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)
+      }
+      else if(props.title === "Not Finished" && !card.finished && !card.inPlan){
+        FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)
+      }
+      else if (props.title ==="In Plan" && card.inPlan){
+        FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)
       }
     })
+
     return FinishedArr;
   }
   // for (... in cardArr) .... assign each one to one of the above
