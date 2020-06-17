@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import OneCard from "./oneCard";
+import {
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBCardHeader,
+  MDBCardTitle,
+  MDBCardText,
+  MDBIcon,
+} from "mdbreact";
+import OneCardList from "./oneCardList"
 
 export default function Cards(props) {
-  
+  const [cardView,setcardView]= useState(true);
+  const handleView=()=>{
+    if (cardView){setcardView(false)}
+    else {setcardView(true)}
+  }
   // function renderNotfinshed(props){  
   //     const NotfinshedArr = notFinshed.map(function(card, index) {
   //       return <OneCard card={card} key={index} />;
@@ -19,13 +34,26 @@ export default function Cards(props) {
     const FinishedArr=[]
      props.cardData.forEach(function (card,index){
       if(props.title === "Finished" && card.finished){
-      FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
+        if (cardView){
+      FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)}
+      else {
+         FinishedArr.push(<OneCardList card={card} key={index} refetch={props.refetch}/>)
+      }
       }
       else if(props.title === "Not Finished" && !card.finished && !card.inPlan){
-        FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
+        if (cardView){
+          FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)}
+        else {
+          FinishedArr.push(<OneCardList card={card} key={index} refetch={props.refetch}/>)
+        }
       }
       else if (props.title ==="In Plan" && card.inPlan){
-        FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
+        if (cardView){
+          FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
+        }
+        else {         
+          FinishedArr.push(<OneCardList card={card} key={index} refetch={props.refetch}/>)
+      }
       }
     })
 
@@ -35,6 +63,7 @@ export default function Cards(props) {
   return (
     <div className="column">
       <div>
+        <MDBBtn className="viewList" onClick={handleView}>change view</MDBBtn>
       <h2>{props.title}</h2>
       </div>
       <div>

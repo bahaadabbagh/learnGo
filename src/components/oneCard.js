@@ -56,25 +56,27 @@ else if (!props.card.finished){
     // const refresh = ()=>props.rerender
     // refresh()
   };
-  const addHelp = async (e) => {
-    await database
-      .collection("Curriculim")
-      .doc(e.target.id)
-      .update({ needHelp: e.target.value });
-    props.refetch();
-  };
-  //  const handleMoveToPlan = ()=>{
-  //   if (!props.card.finished){ <MDBBtn onClick={addToPlan} id={props.card.id}>move to plan</MDBBtn>}
-  //   else if (props.card.inPlan && !props.card.finished){''}
-  //   else {''}
-  // }
+  // const addHelp = async (e) => {
+  //   await database
+  //     .collection("Curriculim")
+  //     .doc(e.target.id)
+  //     .update({ needHelp: e.target.value });
+  //   props.refetch();
+  // };
+
+  const addResources = async (e)=>{
+    await database.collection("Curriculim").doc(e.target.id).update({resources: e.target.value })
+
+      props.refetch();
+
+  }
 
   return (
     <MDBCard className="oneCard" style={{ maxWidth: "35rem" }}>
       <MDBCardHeader>{props.card.sec}</MDBCardHeader>
       <p className="font-weight-bold">{props.card.name}</p>
       <MDBCardBody>
-        <MDBCardText>id:{props.card.id}</MDBCardText>
+        {/* <MDBCardText>id:{props.card.id}</MDBCardText> */}
         <MDBCardText>Time needed:{props.card.time} minutes</MDBCardText>
         <MDBCardText>Number of Lessons:{props.card.lessons}</MDBCardText>
         {!props.card.finished && !props.card.inPlan ? (
@@ -85,8 +87,24 @@ else if (!props.card.finished){
           ""
         )}
         {/* {handleMoveToPlan()} */}
-        <MDBCardText>In Plan? {props.card.inPlan ? "yes" : "no"}</MDBCardText>
+        {/* <MDBCardText>In Plan? {props.card.inPlan ? "yes" : "no"}</MDBCardText> */}
         {props.card.inPlan ? (
+          <form onSubmit={addResources} id={props.card.id}>
+            <MDBInput
+              type="text"
+              label="Resources"
+              id={props.card.id}
+            />{" "}
+            <MDBBtn type="submit">
+              Add
+            </MDBBtn>
+          </form>
+        ) : (
+          ""
+        )}
+
+
+{/* {props.card.inPlan ? (
           <MDBCardText>
             Need Help{" "}
             <MDBInput
@@ -98,18 +116,18 @@ else if (!props.card.finished){
           </MDBCardText>
         ) : (
           ""
-        )}
+        )} */}
+
+
         {/* //className="font-weight-bold" this was in the need help (displayed text)*/}
         {props.card.needHelp ? (
-          <MDBCardText>
-            Contact{" "}
-            <span className="font-weight-bold">{props.card.needHelp}</span> for
-            Help
-          </MDBCardText>
+          <a href={props.card.resources}>
+            <span className="font-weight-bold">{props.card.resources}</span>
+          </a>
         ) : (
           ""
         )}
-        <MDBCardText>Finished:</MDBCardText>
+        {/* <MDBCardText>Finished:</MDBCardText> */}
         <MDBBtn onClick={handleFineshed} id={props.card.id}>
           {" "}
           {props.card.finished ? "Moved to not finished" : " Move to finished"}
