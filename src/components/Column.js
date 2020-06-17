@@ -1,6 +1,5 @@
 import React from "react";
 import OneCard from "./oneCard";
-import 'fontsource-roboto';
 
 export default function Cards(props) {
   
@@ -20,13 +19,13 @@ export default function Cards(props) {
     const FinishedArr=[]
      props.cardData.forEach(function (card,index){
       if(props.title === "Finished" && card.finished){
-      FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)
+      FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
       }
       else if(props.title === "Not Finished" && !card.finished && !card.inPlan){
-        FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)
+        FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
       }
       else if (props.title ==="In Plan" && card.inPlan){
-        FinishedArr.push(<OneCard card={card} key={index} rerender={props.rerender} />)
+        FinishedArr.push(<OneCard card={card} key={index} refetch={props.refetch}/>)
       }
     })
 
