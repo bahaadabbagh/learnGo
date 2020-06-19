@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import database from "./firebaseConfig";
 import {
   MDBBtn,
@@ -6,46 +6,27 @@ import {
   MDBCardBody,
   MDBInput,
   MDBCardHeader,
-  MDBCardTitle,
   MDBCardText,
   MDBIcon,
 } from "mdbreact";
 
 export default function OneCard(props) {
-  // console.log(props);
+
+  const [resources, setresources] = useState('')
   const handleFineshed = async (e) => {
     console.log(props);
 
     let finishState = database.collection("Curriculim").doc(e.target.id);
     if (props.card.finished) {
-       finishState.update({finished: false})
-       props.refetch();
-
-  }
-else if (!props.card.finished){
-      finishState.update({finished: true, inPlan:false})
-      props.refetch();
+      await finishState.update({ finished: false })
+      await props.refetch();
+    }
+    else if (!props.card.finished) {
+      await finishState.update({ finished: true, inPlan: false })
+      await props.refetch();
 
     }
-    // Inverts the prevıous fınısh state.
-    // if (database.collection("Curriculim").doc(e.target.id).finished === false) {
-    //   database.collection("Curriculim").doc(e.target.id).update({ finished: true });
-    // } else if(database.collection("Curriculim").doc(e.target.id).finished === true) {
-    //   // console.log("not working")
-    //   database.collection("Curriculim").doc(e.target.id).update({ finished: false });
-    // }
-    // await finishState.update({ finished: Boolean ? true:false })
-    // await finishState.update({ finished: Boolean(finishState.finished) });
-
-    // await finishState.update({ finished: !Boolean(finishState.finished) })
-    // await finishState.update({ finished: Boolean(finishState.finished) });
     props.refetch();
-
-    // const refresh = ()=>props.rerender
-    // pass the chapter fetch as props and call it here to rerender the fetch after update ---------------- notes form ammar
-    // on snapshot from firebase*(instant refresh and render) -------------------------------------------------------------
-    // refresh()
-    // e.target.value="loading..."
   };
   const addToPlan = async (e) => {
     await database
@@ -53,30 +34,29 @@ else if (!props.card.finished){
       .doc(e.target.id)
       .update({ inPlan: true });
     props.refetch();
-    // const refresh = ()=>props.rerender
-    // refresh()
+
   };
-  // const addHelp = async (e) => {
-  //   await database
-  //     .collection("Curriculim")
-  //     .doc(e.target.id)
-  //     .update({ needHelp: e.target.value });
-  //   props.refetch();
-  // };
 
-  const addResources = async (e)=>{
-    await database.collection("Curriculim").doc(e.target.id).update({resources: e.target.value })
-
-      props.refetch();
-
+  const resourcesInputHandler = async (e) => {
+    setresources(e.target.value)
+  }
+  const addResources = async (e) => {
+    e.preventDefault()
+    const abi = await e.target.id;
+    const fetchDoc = await database.collection("Curriculim").doc(abi).get();
+    const toData = await fetchDoc.data();
+    const resourcesArr = toData.res;
+    resourcesArr.push(resources)
+    await database.collection("Curriculim").doc(abi).update({ res: resourcesArr })
+    props.refetch();
   }
 
   return (
     <MDBCard className="oneCard" style={{ maxWidth: "35rem" }}>
       <MDBCardHeader>{props.card.sec}</MDBCardHeader>
       <p className="font-weight-bold">{props.card.name}</p>
+
       <MDBCardBody>
-        {/* <MDBCardText>id:{props.card.id}</MDBCardText> */}
         <MDBCardText>Time needed:{props.card.time} minutes</MDBCardText>
         <MDBCardText>Number of Lessons:{props.card.lessons}</MDBCardText>
         {!props.card.finished && !props.card.inPlan ? (
@@ -84,50 +64,27 @@ else if (!props.card.finished){
             Plan It <MDBIcon icon="magic" className="ml-1" />
           </MDBBtn>
         ) : (
-          ""
-        )}
-        {/* {handleMoveToPlan()} */}
-        {/* <MDBCardText>In Plan? {props.card.inPlan ? "yes" : "no"}</MDBCardText> */}
-        {props.card.inPlan ? (
-          <form onSubmit={addResources} id={props.card.id}>
-            <MDBInput
-              type="text"
-              label="Resources"
-              id={props.card.id}
-            />{" "}
-            <MDBBtn type="submit">
-              Add
+            ""
+          )}
+
+        <form onSubmit={addResources} id={props.card.id}>
+          <MDBInput
+            type="text"
+            label="Resources"
+            id={props.card.id}
+            onChange={resourcesInputHandler}
+          />{" "}
+          <MDBBtn type="submit">
+            Add
             </MDBBtn>
-          </form>
-        ) : (
-          ""
-        )}
-
-
-{/* {props.card.inPlan ? (
-          <MDBCardText>
-            Need Help{" "}
-            <MDBInput
-              type="text"
-              label="Name"
-              id={props.card.id}
-              onChange={addHelp}
-            />{" "}
-          </MDBCardText>
-        ) : (
-          ""
-        )} */}
-
-
-        {/* //className="font-weight-bold" this was in the need help (displayed text)*/}
-        {props.card.needHelp ? (
-          <a href={props.card.resources}>
-            <span className="font-weight-bold">{props.card.resources}</span>
+        </form>
+        {props.card.res ? (
+          <a href={props.card.res}>
+            <MDBCardText className="res">{props.card.res.map(function (abi, index) { return "Source # " + index + " " })}</MDBCardText>
           </a>
         ) : (
-          ""
-        )}
-        {/* <MDBCardText>Finished:</MDBCardText> */}
+            ""
+          )}
         <MDBBtn onClick={handleFineshed} id={props.card.id}>
           {" "}
           {props.card.finished ? "Moved to not finished" : " Move to finished"}

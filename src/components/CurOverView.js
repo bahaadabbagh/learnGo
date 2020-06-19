@@ -12,30 +12,17 @@ export default function CurOverView(props) {
     setCardArr(data);
   }
 
-  // useEffect(() => {
-  //    chapterFetch();
-  // }, [])
-  React.useEffect(() => {
+
+  useEffect(() => {
     chapterFetch();
   }, []);
-  //   const inPlan = []
-  //   const finishedCards = [];
-  //   const notFinshed = [];
-  //   const filterCards=()=>{
-  //     cardArr.map(function (card,index){
-  //       // if card.finished ? ( finishedCards.push(card)) : (notFinshed.push(card)) // still have a problem here
-  //       if (card.finished){ finishedCards.push(card)} else{notFinshed.push(card)}
-  //       //   if card.finished?: finished.push(card)
-  //     })
-  // }
+
   return (
     <MDBContainer>
       <MDBRow>
         <MDBCol sm="4">
           {" "}
           <Column title="Finished" cardData={cardArr} refetch={chapterFetch} />
-          {/* <Column title="Finished" cardData={cardArr} /> */}
-
         </MDBCol>
         <MDBCol sm="4">
           {" "}

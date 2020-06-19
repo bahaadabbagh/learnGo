@@ -14,7 +14,7 @@ import {
 export default class Contact extends Component {
   render() {
     return (
-      <MDBRow>
+      <MDBRow className="contactCard">
         <MDBCol md="2">
           <MDBCard>
             <MDBCardImage
